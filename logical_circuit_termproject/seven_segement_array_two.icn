@@ -1,0 +1,46 @@
+SymbolianIcn ver1.00(2006.04.27)
+ModuleName seven_segement_array_two
+LanguageType Veirlog
+GridInterval 8
+MillimetersIn100RealScaledUnit 25
+ZoomOutScale 32
+NumberOfHorzPapaers 1
+NumberOfVertPapaers 1
+IfDrawModuleName True
+IfDrawPortnameText True
+ModuleNameDrawPosition middle
+Boxes
+Box Left: 328 Top: 560 ,Right: 512 ,Bottom: 608
+End
+Parameters
+End
+Ports
+Port Left: 304 Top: 568 ,SymbolSideLeft: 328 ,SymbolSideTop: 568
+Portname: B ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 0 ,LV:
+0
+,RV:
+0
+Port Left: 304 Top: 584 ,SymbolSideLeft: 328 ,SymbolSideTop: 584
+Portname: C ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 0 ,LV:
+0
+,RV:
+0
+Port Left: 304 Top: 600 ,SymbolSideLeft: 328 ,SymbolSideTop: 600
+Portname: D ,PortType: singlebit ,LanguageType: Veriilog ,PortDirection: 0 ,LV:
+0
+,RV:
+0
+Port Left: 536 Top: 568 ,SymbolSideLeft: 512 ,SymbolSideTop: 568
+Portname: Out ,PortType: multibit ,LanguageType: Veriilog ,PortDirection: 2 ,LV:
+7
+,RV:
+0
+End
+Ellipses
+End
+Lines
+End
+Arcs
+End
+Texts
+End

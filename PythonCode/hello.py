@@ -1,0 +1,7 @@
+#coding: euc-kr
+
+print("Hello Python")
+print("Hello\nPython\n")
+print("¾È³ç ÆÄÀÌ½ã")
+print("¾È³ç\nÆÄÀÌ½ã\n")
+print(12 * 24)

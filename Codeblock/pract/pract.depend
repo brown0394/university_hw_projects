@@ -1,0 +1,42 @@
+# depslib dependency file v1.0
+1600828871 source:c:\users\sungc\documents\codeblock\temp.cpp
+	<iostream>
+	<cstring>
+
+1600837092 source:c:\users\sungc\documents\codeblock\pmul.cpp
+	<iostream>
+	<cstring>
+	<cstdio>
+
+1601454055 source:c:\users\sungc\documents\codeblock\pract\mmul.cpp
+	<iostream>
+
+1602038979 source:c:\users\sungc\documents\codeblock\pract\stkseq.cpp
+	<iostream>
+	<algorithm>
+	<iterator>
+
+1602598744 source:c:\users\sungc\documents\codeblock\pract\untitled1.c
+	<stdio.h>
+
+1602638774 source:c:\users\sungc\documents\codeblock\pract\qeue.cpp
+	<iostream>
+
+1603861244 source:c:\users\sungc\documents\codeblock\pract\test.cpp
+	<iostream>
+	<cstring>
+
+1604477584 source:c:\users\sungc\documents\codeblock\pract\dual.cpp
+	<iostream>
+
+1605063621 source:c:\users\sungc\documents\codeblock\pract\treepost.cpp
+	<iostream>
+	<string>
+
+1605661942 source:c:\users\sungc\documents\codeblock\pract\testest.cpp
+	<iostream>
+
+1606268427 source:c:\users\sungc\documents\codeblock\pract\debug.cpp
+	<iostream>
+	<string>
+

@@ -1,0 +1,79 @@
+#include <misc.h>
+#include <stm32f10x.h>
+#include <stm32f10x_exti.h>
+#include <stm32f10x_gpio.h>
+#include <stm32f10x_rcc.h>
+#include <stm32f10x_usart.h>
+#include <stm32f10x_tim.h>
+#include <stm32f10x_adc.h>
+#include <stm32f10x_dma.h>
+#include "lcd.h"
+#include "touch.h"
+uint16_t temp;
+vu32 ADC_V;
+void RCC_Configure() {
+RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
+RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOC | 
+RCC_APB2Periph_GPIOD | RCC_APB2Periph_GPIOE | RCC_APB2Periph_GPIOB | RCC_APB2Periph_ADC1, 
+ENABLE);
+RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
+}
+
+void GPIO_Configure() {
+GPIO_InitTypeDef GPIO_InitStructure;
+GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+GPIO_InitStructure.GPIO_Pin = (GPIO_Pin_2);
+GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+GPIO_Init(GPIOD, &GPIO_InitStructure);
+}
+void ADC_Configure() {
+ADC_InitTypeDef ADC_InitStructure;
+ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
+ADC_InitStructure.ADC_ScanConvMode = ENABLE;
+ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
+ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
+ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+ADC_InitStructure.ADC_NbrOfChannel = 1;
+ADC_Init(ADC1, &ADC_InitStructure);
+ADC_RegularChannelConfig(ADC1, ADC_Channel_10, 1, ADC_SampleTime_239Cycles5);
+ADC_DMACmd(ADC1, ENABLE);
+ADC_Cmd(ADC1, ENABLE);
+ADC_ResetCalibration(ADC1);
+while(ADC_GetResetCalibrationStatus(ADC1));
+ADC_StartCalibration(ADC1);
+while(ADC_GetCalibrationStatus(ADC1));
+}
+void DMA_Configure() {
+DMA_InitTypeDef DMA_InitStructure;
+DMA_DeInit(DMA1_Channel1);
+DMA_InitStructure.DMA_BufferSize =2;
+DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
+DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)&ADC_V;
+DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Word;
+DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;페이지 14 / 16
+DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&ADC1->DR;
+DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Word;
+DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Enable;
+DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+DMA_Init(DMA1_Channel1, &DMA_InitStructure);
+DMA_Cmd(DMA1_Channel1, ENABLE);
+}
+int main(void) {
+SystemInit();
+RCC_Configure();
+GPIO_Configure();
+ADC_Configure();
+DMA_Configure();
+LCD_Init();
+Touch_Configuration();
+Touch_Adjust();
+LCD_Clear(WHITE);
+while(1) {
+ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+LCD_ShowNum(40, 130, temp, 5, BLACK, WHITE);
+if(temp > 2000) GPIO_SetBits(GPIOD, GPIO_Pin_2);
+else GPIO_ResetBits(GPIOD, GPIO_Pin_2);
+}
+}

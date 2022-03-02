@@ -1,0 +1,83 @@
+<doctype html>
+	<html>
+	<head>
+		<title>Phong Lighting Example</title>
+
+		<!-- HW3: modify vertex and fragment shaders -->
+		<script id="vertexShader" type="x-shader/x-vertex">
+			attribute vec3 pos;
+			attribute vec3 normal;
+
+			uniform mat4 projMat;
+			uniform mat4 viewMat;
+			uniform mat4 worldMat;
+			uniform vec3 eyePos;
+			uniform mat4 normalMat; 
+			uniform mat3 tiMat;
+
+			varying vec3 v_normal;
+			varying vec3 v_view;
+
+			void main()
+			{
+				v_normal = normalize(tiMat * normal);
+				vec3 worldPos = (worldMat * vec4(pos, 1.0)).xyz;
+				v_view = normalize(eyePos - worldPos);
+				gl_Position = projMat * viewMat * worldMat * vec4(worldPos,1.0);
+			}
+		</script>
+
+		<script id="fragmentShader" type="x-shader/x-fragment">
+			precision mediump float;
+
+			uniform vec3 matSpec, matAmbi, matEmit;
+			uniform float matSh;
+			uniform vec3 srcDiff, srcSpec, srcAmbi;
+			uniform vec3 lightDir;
+
+			uniform vec3 matDiff;
+
+			varying vec3 v_normal;
+			varying vec3 v_view;
+			varying vec2 v_texCoord;
+
+			void main()
+			{//201824641 최성찬
+				vec3 normal = normalize(v_normal);
+				vec3 view = normalize(v_view);
+				vec3 light = normalize(lightDir);
+
+				vec3 diff = max(dot(normal, light), 0.0) * srcDiff * matDiff;
+
+				vec3 refl = 2.0 * normal * dot(normal, light) - light;
+				vec3 spec = pow(max(dot(refl, view), 0.0), matSh) * srcSpec * matSpec;
+
+				vec3 ambi = srcAmbi * matAmbi;
+
+				gl_FragColor = vec4(diff + spec + ambi + matEmit, 1.0);
+			}
+		</script>
+		<!-- Added to use utilities -->
+		<script src="./lib/webgl-utils.js"></script>
+		<script src="./lib/webgl-debug.js"></script>
+		<script src="./lib/cuon-utils.js"></script>
+		<script src="./lib/cuon-matrix.js"></script>
+		<script src="./lib/cuon-matrix.js"></script>
+		<script src="PhongLighting.js"></script>	
+		<style>
+			#mycanvas {
+				width: 500px;
+				height: 500px; 
+				margin: auto;
+				display: block;
+				border: 1px solid black;
+			}
+		</style>
+	</head>
+	<body onload="main()">
+		<canvas id="mycanvas"></canvas>
+		<form>
+			<input id="scaleBar" type="range" name="floats" min="0" max="4" step="0.02" value="1.00" onchange="setSpeed();"/>
+		</form>
+	</body>
+	</html>

@@ -1,0 +1,121 @@
+StimulianSaveFile
+LanguageType Verilog
+tbModuleName key_led_tb
+ModuleName key_led
+TimeUnit ns
+TotalTime 10000
+GridInterval 100
+Parameters
+End
+Port
+-1 ! 1 Binary CLK singlebit in 0 0 ClockInformation 0 100 0.5 0 ClockEnd PortEnd 0
+-1 " 1 Binary DifMod singlebit in 0 0 PortEnd 0
+-1 # 1 Binary K1 singlebit in 0 0 PortEnd 0
+-1 $ 1 Binary K2 singlebit in 0 0 PortEnd 0
+-1 % 1 Binary K3 singlebit in 0 0 PortEnd 0
+-1 & 1 Binary K4 singlebit in 0 0 PortEnd 0
+-1 ' 1 Binary K5 singlebit in 0 0 PortEnd 0
+-1 9 1 Binary reset singlebit in 0 0 PortEnd 0
+0 ( 0 Binary LED multibit out 7 0 Children 0 [7] 1 [6] 2 [5] 3 [4] 4 [3] 5 [2] 6 [1] 7 [0] ChildrenEnd PortEnd 0
+0 8 1 Binary isd singlebit out 0 0 PortEnd 0
+End
+pixelTimeRatio 5
+HorzZoomOutScale 80
+WavesHorzScrollBarMax 98301
+WavesHorzScrollBarPosition 0
+WavesHorzScrollBarEnabled -1
+DefaultVertInterval 32
+UnScaledDefaultVertInterval 16
+UnScaledDefaultVertSignalHeight 10
+WavesVertScrollBarMax 100
+WavesVertScrollBarPosition 0
+WavesVertScrollBarEnabled 0
+Vars
+s!
+t0
+0 0 1 1
+0 100 100 0
+50 100 100 1
+s"
+t0
+0 3100 2 0
+3000 0 1 1
+s#
+t0
+0 500 3 0
+400 500 2 1
+2000 2100 2 1
+2100 2100 2 0
+5100 0 1 1
+5200 0 1 0
+s$
+t0
+0 1500 2 0
+1400 300 2 1
+1800 2100 2 0
+3800 0 1 1
+s%
+t0
+0 300 2 0
+200 1000 2 1
+1300 1100 2 0
+2300 1200 3 1
+3600 1200 2 0
+5400 0 1 1
+5500 0 1 0
+s&
+t0
+0 700 2 0
+600 3800 2 1
+4500 500 2 0
+4900 0 1 1
+s'
+t0
+0 5800 2 0
+5700 0 1 1
+s0
+t0
+0 0 1 0
+s1
+t0
+0 0 1 0
+s2
+t0
+0 0 1 0
+s3
+t0
+0 0 1 0
+s4
+t0
+0 0 1 0
+s5
+t0
+0 0 1 0
+s6
+t0
+0 0 1 0
+s7
+t0
+0 0 1 0
+s8
+t0
+0 0 1 0
+s9
+t0
+0 2700 2 1
+100 2700 2 0
+End
+Cursors
+5800
+End
+ActiveCursorIndex 0
+versionCode
+20070511
+psrFileName
+C:\Flowrian2322\_analyze\key_led.psr
+systemCExportSimulationTime
+10000
+systemCExportSimulationTimeUnit
+10000
+systemCProbes
+End

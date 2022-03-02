@@ -1,0 +1,199 @@
+<doctype html>
+	<html>
+	<head>
+		<title>Texture Example</title>
+		<script id="vertexShader" type="x-shader/x-vertex">
+			attribute vec3 pos;
+			attribute vec2 texCoord; 
+
+			uniform mat4 projMat;
+			uniform mat4 viewMat;
+			uniform mat4 worldMat;
+
+			varying vec2 vtexCoord;
+
+			void main()
+			{
+				gl_Position = projMat * viewMat * worldMat * vec4(pos,1);
+				vtexCoord = texCoord;
+			}
+		</script>
+
+		<script id="fragmentShader" type="x-shader/x-fragment">
+			precision mediump float;
+
+			uniform sampler2D sampler;
+			varying vec2 vtexCoord;
+
+			void main()
+			{
+				gl_FragColor = texture2D(sampler, vtexCoord);
+			}
+		</script>
+
+
+		<!-- Added to use utilities -->
+		<script src="./lib/webgl-utils.js"></script>
+		<script src="./lib/webgl-debug.js"></script>
+		<script src="./lib/cuon-utils.js"></script>
+		<script src="./lib/cuon-matrix.js"></script>
+		<script src="./lib/cuon-matrix.js"></script>
+
+
+		<script type="text/javascript">
+			function main()
+			{
+				canvas = document.getElementById("mycanvas");
+				gl = canvas.getContext("webgl");
+
+				const pixelRatio = window.devicePixelRatio || 1;
+				canvas.width  = pixelRatio * canvas.clientWidth;
+				canvas.height = pixelRatio * canvas.clientHeight;
+				gl.viewport(0, 0, canvas.width, canvas.height);
+				gl.clearColor(1, 1, 1, 0);
+
+		var positions = [
+		-0.8,  0.8, 0,//upper left
+		 0.8,  0.8, 0,//upper right
+		-0.8, -0.8, 0,//lower left
+		 0.8, -0.8, 0 //lower right
+		 ];
+
+		 var texCoord =[
+		0.0, 1.0,//upper left
+		1.0, 1.0,//upper right
+		0.0, 0.0,//lower left
+		1.0, 0.0 //lower right
+		];
+
+		var indices = [0,3,1,0,2,3];
+
+		var position_buffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, position_buffer);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+		var texCoord_buffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, texCoord_buffer);
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texCoord), gl.STATIC_DRAW);
+
+		var index_buffer = gl.createBuffer();
+		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, index_buffer);
+		gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+
+		const vs_source = document.getElementById('vertexShader').text;
+		const vs = gl.createShader(gl.VERTEX_SHADER);
+		gl.shaderSource(vs, vs_source);
+		gl.compileShader(vs);
+		if ( ! gl.getShaderParameter(vs, gl.COMPILE_STATUS) ) {
+			alert( gl.getShaderInfoLog(vs) );
+			gl.deleteShader(vs);
+		}
+
+		const fs_source = document.getElementById('fragmentShader').text;
+		const fs = gl.createShader(gl.FRAGMENT_SHADER);
+		gl.shaderSource(fs, fs_source);
+		gl.compileShader(fs);
+		if ( ! gl.getShaderParameter(fs, gl.COMPILE_STATUS) ) {
+			alert( gl.getShaderInfoLog(fs) );
+			gl.deleteShader(fs);
+		}
+
+		prog = gl.createProgram();
+		gl.attachShader(prog, vs);
+		gl.attachShader(prog, fs);
+		gl.linkProgram(prog);
+		if ( ! gl.getProgramParameter(prog, gl.LINK_STATUS) ) {
+			alert( gl.getProgramInfoLog(prog) );
+		}
+
+	// get scale from slider
+	var dist = document.getElementById('scaleBar').value;
+	var worldMatrix = new Matrix4();
+	var viewMatrix = new Matrix4();
+	var projMatrix = new Matrix4();
+	//worldMatrix.setRotate(0,0,1,0);
+	viewMatrix.setLookAt(0,0,dist,0,0,0,0,1,0);
+	projMatrix.setPerspective(90,1,1,100);
+	var wM = gl.getUniformLocation(prog,'worldMat');
+	var vM = gl.getUniformLocation(prog,'viewMat');
+	var pM = gl.getUniformLocation(prog,'projMat');
+
+	gl.useProgram(prog);
+	gl.uniformMatrix4fv( wM, false, worldMatrix.elements );
+	gl.uniformMatrix4fv( vM, false, viewMatrix.elements );
+	gl.uniformMatrix4fv( pM, false, projMatrix.elements );
+	
+	var p = gl.getAttribLocation(prog, 'pos');
+	gl.bindBuffer(gl.ARRAY_BUFFER, position_buffer);
+	gl.vertexAttribPointer(p, 3, gl.FLOAT, false, 0, 0);
+	gl.enableVertexAttribArray(p);
+
+	var t = gl.getAttribLocation(prog, 'texCoord');
+	gl.bindBuffer(gl.ARRAY_BUFFER, texCoord_buffer);
+	gl.vertexAttribPointer(t, 2, gl.FLOAT, false, 0, 0);
+	gl.enableVertexAttribArray(t);
+
+	gl.clear( gl.COLOR_BUFFER_BIT );
+	gl.enable(gl.DEPTH_TEST)
+	gl.enable(gl.CULL_FACE);
+	gl.cullFace(gl.BACK);
+
+	// Create a texture object
+	var texture = gl.createTexture();
+
+	// Bind the texture object to the target
+	gl.bindTexture(gl.TEXTURE_2D, texture);
+
+	// Get the storage location of sampler
+	var u_Sampler = gl.getUniformLocation(prog, 'sampler');
+
+	// Create the image object
+	var image = new Image();
+
+	// Register the event handler to be called when image loading is completed
+	// image.onload = function(){ loadTexture(gl, indices.length, texture, u_Sampler, image); };
+	// image.src = './square.png';
+
+	image.addEventListener('load',function(){
+		loadTexture(gl, indices.length, texture, u_Sampler, image);
+	}, false);
+	image.src = 'sky.jpg';
+	//image.crossOrigin = "anonymous";
+
+}
+
+function loadTexture(gl, n, texture, u_Sampler, image) {
+	gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);  // Flip the image's y axis
+	// Activate texture unit0
+	gl.activeTexture(gl.TEXTURE0);
+
+	// Set the texture parameter
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+	// Set the image to texture
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
+	
+	// Set the texture unit 0 to the sampler
+	gl.uniform1i(u_Sampler, 0);
+	
+	// Clear <canvas>
+	gl.clear(gl.COLOR_BUFFER_BIT);
+	gl.drawElements(gl.TRIANGLES, n, gl.UNSIGNED_SHORT, 0);
+}
+</script>
+<style>
+	#mycanvas {
+		width: 500px;
+		height: 500px; 
+		margin: auto;
+		display: block;
+		border: 1px solid black;
+	}
+</style>
+</head>
+<body onload="main()">
+	<canvas id="mycanvas"></canvas>
+	<form>
+		<input id="scaleBar" type="range" name="floats" min="1" max="10" step="0.02" value="1.00" onchange="main();"/>
+	</form>
+</body>
+</html>
