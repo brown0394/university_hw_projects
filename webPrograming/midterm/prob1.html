@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+
+<html>
+   <head>
+      <meta charset = "utf-8">
+      <title>Book Cover</title>
+      <style type = "text/css">
+        input[type=text] {
+            width : 200px;
+        }
+        input[type=submit] {
+            width : 100px;
+            height: 22px;
+            color : white;
+            background-color: dimgrey;
+            border-color: dimgray;
+            font-size: 2px;
+        }
+        input[type=reset] {
+            width : 100px;
+            height: 22px;
+            color : white;
+            border-color: dimgray;
+            background-color: dimgrey;
+            font-size: 2px;
+        }
+        select {
+            width : 208px;
+            height : 22px;
+        }
+        div {
+            margin-top: 5px;
+        }
+        .title {
+            position: relative;
+            left : 50px;
+            font-weight: bold;
+        }
+        div.page {
+            border : 3px solid black;
+            border-radius: 10px;
+            width : 400px;
+            height: 500px;
+            text-align: center;
+            position: relative;
+            display: none;
+        }
+        .pageTitle {
+            margin-top: 60px;
+            font-weight: bold;
+            font-size: 25px;
+        }
+        .pageDescription {
+            margin-top: 0px;
+            font-size: 15px;
+        }
+        .pageAuthor {
+            margin-top: 15px;
+            font-size: 20px;
+        }
+        .pagePublisher {
+            font-size: 10px;
+        }
+        div.absolute {
+            position: absolute;
+            text-align: right;
+            height: 50px;
+            width: 380px;
+            bottom: 0px;
+        }
+        .outer {
+            position:fixed;
+            left:50%;
+            margin-left:-250px;
+        }
+        .inputs {
+            margin-left: 100px;
+            margin-bottom: 20px;
+        }
+      </style>           
+      <script type = "text/javascript">
+        
+        var titleForm;
+        var description;
+        var publisher;
+        var author;
+        var generate;
+        var resett;
+        var ptitle;
+        var pdescript;
+        var pauthor;
+        var ppublisher;
+        var page;
+        function start() {
+            titleForm = document.getElementById("titleIn");
+            description = document.getElementById("descriptIn");
+            publisher = document.getElementById("publisher");
+            author = document.getElementById("author");
+            generate = document.getElementById("generate");
+            resett = document.getElementById("resett");
+            pauthor = document.getElementById("pauthor");
+            ptitle = document.getElementById("ptitle");
+            ppublisher = document.getElementById("ppublisher");
+            pdescript = document.getElementById("pdescript");
+            page = document.getElementById("pageId");
+
+            resett.addEventListener("click", clear, false);
+            generate.addEventListener("click", makePage, false);
+            clear();
+        }
+
+        function clear() {
+            titleForm.value = "";
+            description.value = ""
+            publisher.value = "부산출판사"
+            author.value = ""
+            page.style.display = "none";
+        }
+
+        function checkBlank() {
+            switch ("") {
+                case titleForm.value: {}
+                case description.value: {}
+                case author.value: {
+                    window.alert("모든 서식을 채워주세요.");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function makePage() {
+            if (checkBlank()) {
+                pauthor.innerHTML = author.value + " 지음";
+                ptitle.innerHTML = titleForm.value;
+                pdescript.innerHTML = description.value;
+                ppublisher.innerHTML = "(주)" + publisher.value;
+                page.style.display = "block";
+            }
+        }
+
+        window.addEventListener("load", start, false);
+      </script>
+   </head>
+   <body>
+    <div class = "outer">
+        <div class = "inputs">
+            <p class = "title"> 책 표지 만들기 </p>
+            <div>
+                <input id = "titleIn" type="text" placeholder="제목 입력">
+            </div>
+            <div>
+                <input id = "descriptIn" type="text" placeholder="설명 입력">
+            </div>
+            <div>
+                <select id ="publisher" name="publisher">
+                    <option value="부산출판사">부산출판사</option>
+                    <option value="금정출판사">금정출판사</option>
+                    <option value="장전출판사">장전출판사</option>
+                </select>
+            </div>
+            <div>
+                <input id = "author" type="text" placeholder="저자 입력">
+            </div>
+            <div>
+                <input id = "generate" type="submit" value="책 표지 출력"> 
+                <input id = "resett" type="reset" value="초기화">
+            </div>
+        </div>
+        <div class="page" id = "pageId">
+            <p class="pageTitle" id = "ptitle">적당한 제목</p>
+            <img src="pnulogo.jpg" alt="logo here" width="200px" height="200px">
+            <p class="pageDescription" id = "pdescript">설명문구</p>
+            <p class="pageAuthor" id = "pauthor">누구누구 지음</p>
+            <div class="absolute">
+                <p class="pagePublisher" id = "ppublisher">(주) 출판사</p>
+            </div>
+        </div>
+    </div>
+        
+   </body>
+
+</html>

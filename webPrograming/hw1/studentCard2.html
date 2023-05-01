@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+
+<html>
+   <head>
+      <meta charset = "utf-8">
+      <title>Student Id Card CSS</title>
+      <style type = "text/css">
+        div { 
+            background-color: cornflowerblue;
+            width: 30em;
+            height: 18em;
+            border: 3px solid black;
+            border-radius: 10px;
+            padding-top: 0.05em;
+            box-shadow: 25px 25px 50px dimgray;
+        }
+        .headline {
+            text-align: center;
+            font-size: large;
+            
+        }
+        .studentimg{
+            border: 3px solid black;
+            background-color: white;
+            padding: 0.3em;
+            margin-left: 1em;
+            margin-top: 2em;
+            float: left;
+            transition: transform 2s;
+        }
+        .studentimg:hover {
+            transform: scale(5, 5);
+        }
+        .informations{
+            margin-left: 17em;
+            margin-top: 6em;
+            margin-bottom: 0em;
+            font-size: small;
+        }
+        nav{
+            margin-left: 17em;
+            margin-top: 0em;
+            font-size: small;
+        }
+        nav ul {
+            display: none;
+        }
+        nav:hover ul {
+            display: block;
+            margin-top: 0em;
+            margin-bottom: 0em;
+        }
+        a:link {
+            color: black;
+        }
+        .foot{
+            margin-top: 5em;
+            text-align: center;
+        }
+      </style>
+   </head>
+   <body>
+        <div>
+            <p class="headline">
+                학생증
+                <img src="pnulogo.jpg" alt="logo here" width="20em" height="20em">
+            </p>
+            <p class="studentimg">
+                <img src="sponge.png" alt="student photo" width="100em" height="100em">
+            </p>
+            <p class ="informations">
+                이름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 최성찬<br>
+                학번&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 201824641<br>
+                <nav>이메일&nbsp;&nbsp;&nbsp;&nbsp;<a href="mailto:sungchan3100@pusan.ac.kr">sungchan3100@pusan.ac.kr</a>
+                    <ul>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<a href="mailto:sungchan3100@hanmail.net">sungchan3100@hanmail.net</a>
+                    </ul>
+                </nav>
+            </p>
+            
+
+            <p class = "foot">
+                부산대학교 총장 <em>인</em>
+            </p>
+           
+        </div>
+
+
+
+   </body>
+
+</html>

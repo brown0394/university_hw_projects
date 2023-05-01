@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+
+<html>
+   <head>
+      <meta charset = "utf-8">
+      <title>Drop Down Menu Bar</title>
+      <script type = "text/javascript">
+        //<!--
+            var arr = new Array("one", "two", "three");
+            for (var elem in arr) {
+                document.writeln("<p>" + elem + "</p>");
+            }
+
+            var str = arr.join("<\p><p>");
+            document.writeln("<p>" + str + "</p>");
+            document.writeln("<p>" + Math.ceil(2/10) + "</p>");
+            function myFunction() {
+                var paragraph = document.getElementById("demo");
+                //paragraph.innerHTML = "clicked";
+                paragraph.style.color = "red";
+            }
+                //chpt11
+            
+            function dis() {
+                var bt = document.getElementById("why"+1);
+                bt.disabled = true;
+            }
+        //-->
+      </script>
+   </head>
+   <body>
+        <p id="demo" onclick="myFunction()">Click me to change my text color.<br>just br</p>
+        <input id="why1" type="button" value="test1" onclick="dis()"/>
+   </body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+
+<html>
+   <head>
+      <meta charset = "utf-8">
+      <title>Drop Down Menu Bar</title>
+      <script type = "text/javascript">
+        <!--
+          var arr = new Array(10);
+          var arr1 = new Array(10);
+          function zerofy(){
+            for (var i = 0; i < 10; ++i) {
+              arr[i] = 0;
+              arr1[i] = 0;
+            }
+          }
+          function getPercent() {
+            var sum = 0;
+            for (var i = 0; i < 10; ++i) {
+              sum += arr[i];
+            }
+            if (sum == 0) {
+              for (var i = 0; i < 10; ++i) {
+                arr1[i] = 0;
+              }
+            }
+            else {
+              for (var i = 0; i < 10; ++i) {
+                arr1[i] = (arr[i] / sum) * 100;
+                //arr1[i].toFixed(2);
+              }
+            }
+          }
+          function displayNumbers() {
+            getPercent();
+            var divider = document.getElementById("divider");
+            var str = "<table border = 1><caption>Random number generation test";
+            str += "<thead><tr><th>#</th><th>Frequency</th><th>Percentage</th></tr><tbody>";
+
+            for (var i = 0; i < 10; ++i) {
+              str += "<tr><td>" + (i+1) + "</td><td>" + arr[i] + "</td><td>";
+              if (arr1[0] == 0) {
+                str += "0</td>\n";
+              }
+              else {
+                str += arr1[i].toFixed(2) + "</td>\n";
+              }
+              divider.innerHTML = str;
+            }
+            divider.innerHTML += "</tbody></table>";
+            zerofy();
+          }
+          function randomNumber() {
+            for (var i = 0; i < 100000; ++i) {
+              var value = Math.floor(1 + Math.random() * 10);
+              if (value < 1 || value > 10) {
+                document.writeln("<p>problem</p>");
+              }
+              ++arr[value-1];
+            }
+            displayNumbers();
+          }
+          function start() {
+            zerofy();
+            var button = document.getElementById("randomNum");
+            button.addEventListener("click", randomNumber, false);
+            displayNumbers();
+          }
+
+          //document.writeln("<p> max value : " + arr[0] + "</p>");
+          window.addEventListener("load", start, false);
+        //-->
+      </script>
+   </head>
+   <body>
+      <form action = "#">
+        <input id = "randomNum" type = "button" value = "Reset">
+      </form>
+      <div id = "divider">
+
+      </div>
+   </body>
+
+</html>

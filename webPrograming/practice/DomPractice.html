@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+
+<html>
+   <head>
+      <meta charset = "utf-8">
+      <title>PhoneBook Manager</title>
+      <style type = "text/css">
+        div.boxx {
+            position: relative;
+            width:260px;
+            height: 130px;
+        }
+        .boxx div {
+            position: relative;
+            width: 250px;
+            margin-bottom: 2px;
+        }
+        .boxx  div  input {
+            position: absolute;
+            right : 0px;
+        }
+        input[type=button] {
+            margin-top: 5px;
+        }
+        .flexBox {
+            display: flex;
+            width: 220px;
+            flex-direction: column;
+            height: 280px;
+            flex-wrap: wrap;
+        }
+        button {
+            width: 100px;
+            height: 50px;
+            font-size: 25px;
+            margin-top: 5px;
+        }
+        .infoBox {
+            border: 3px solid black;
+            width:150px;
+            height: 115px;
+            display: none;
+            text-align: center;
+            border-radius: 10px;
+            margin-left: 50px;
+        }
+        .infoBox p {
+            font-size: 20px;
+            margin-bottom: 2px;
+            margin-top: 2px;
+        }
+        .iSelect input[type=button]{
+            width: 25px;
+            height: 25px;
+            font-size: 10px;
+            margin-top: 5px;
+        }
+        .outer {
+            position:fixed;
+            left:50%;
+            margin-left:-150px;
+            margin-top: 50px;
+        }
+        .selectable {
+            margin-left: 30px;
+            margin-bottom: 10px;
+        }
+      </style>
+      <script src = "phoneBookDom.js"></script>
+   </head>
+   <body>
+    <div class = "outer">
+        <div class="boxx">
+            <form method = "#">
+                <div>
+                    <label>이름: <input id = "name1" type="text" required/></label>
+                </div>
+                <div>
+                    <label>전화번호: <input id = "phoneNumber" type="tel" pattern="[010]-[0-9]{4}-[0-9]{4}" required/></label>
+                </div>
+                <div>
+                    <label>이메일: <input id = "email" type="email"></label>
+                </div>
+                <div>
+                    <label>메모: <input id = "memo" type="text"></label>
+                </div>
+                <input id = "addP" type="button" value="연락처 추가"> 
+                <input id = "delP" type="button" value="연락처 삭제">
+                <input id = "delA" type="button" value="모두 삭제">
+            </form>
+        </div>
+        <div class = selectable>
+            <div class = "flexBox" id = "fbox">
+            
+            </div>
+            <div class = "iSelect" id = "is">
+        
+            </div>
+        </div>
+        <div class = "infoBox" id = "ibox">
+            <p id = "p1">d</p>
+            <p id = "p2">d</p>
+            <p id = "p3">d</p>
+            <p id = "p4">d</p>
+        </div>
+    </div>
+   </body>
+
+</html>
